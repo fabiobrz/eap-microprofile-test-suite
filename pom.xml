@@ -19,6 +19,7 @@
         <module>tooling-docker</module>
         <module>microprofile-health</module>
         <module>microprofile-metrics</module>
+        <module>microprofile-open-api</module>
     </modules>
 
     <properties>
