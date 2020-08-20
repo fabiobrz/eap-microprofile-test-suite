@@ -122,13 +122,11 @@
                                 </goals>
                                 <phase>process-test-resources</phase>
                                 <configuration>
-                                    <output-file-name>test-microprofile-config-bootable.jar</output-file-name>
+                                    <output-file-name>test-microprofile-metrics-bootable.jar</output-file-name>
                                     <hollowJar>true</hollowJar>
                                     <record-state>false</record-state>
                                     <log-time>${galleon.log.time}</log-time>
-                                    <!--                                    <offline>true</offline>-->
                                     <plugin-options>
-                                        <!--                                        <jboss-maven-dist/>-->
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                     </plugin-options>
                                     <feature-packs>
@@ -164,7 +162,7 @@
                                         <jboss.args/>
                                         <server.jvm.args/>
                                         <install.dir>${project.build.directory}/jboss-as-bootable</install.dir>
-                                        <bootable.jar>${project.build.directory}/test-microprofile-config-bootable.jar</bootable.jar>
+                                        <bootable.jar>${project.build.directory}/test-microprofile-metrics-bootable.jar</bootable.jar>
                                         <arquillian.xml>arquillian-bootable.xml</arquillian.xml>
                                         <module.path>${jboss.modules.path}</module.path>
                                     </systemPropertyVariables>
