@@ -39,7 +39,7 @@
         <version.org.eclipse.microprofile>3.3</version.org.eclipse.microprofile>
         <version.org.jboss.arquillian>1.5.0.Final</version.org.jboss.arquillian>
         <version.org.jboss.wildfly.dist>20.0.0.Final</version.org.jboss.wildfly.dist>
-        <version.org.wildfly.arquillian>3.0.0.Beta2</version.org.wildfly.arquillian>
+        <version.org.wildfly.arquillian>3.0.0.Beta3</version.org.wildfly.arquillian>
         <version.org.fusesource.jansi>1.18</version.org.fusesource.jansi>
         <!-- wildfly-core update needed to have the launcher version with BootableJarCommandBuilder used to start
         the server up -->
@@ -62,9 +62,9 @@
         <galleon.log.time>true</galleon.log.time>
         <testsuite.galleon.pack.groupId>org.wildfly</testsuite.galleon.pack.groupId>
         <testsuite.galleon.pack.artifactId>wildfly-galleon-pack</testsuite.galleon.pack.artifactId>
-        <testsuite.galleon.pack.version>20.0.0.Final</testsuite.galleon.pack.version>
+        <testsuite.galleon.pack.version>20.0.1.Final</testsuite.galleon.pack.version>
         <!-- Bootable JAR -->
-        <version.org.wildfly.jar.plugin>2.0.0.Beta2</version.org.wildfly.jar.plugin>
+        <version.org.wildfly.jar.plugin>2.0.0.Beta3</version.org.wildfly.jar.plugin>
     </properties>
 
     <dependencyManagement>
@@ -505,11 +505,6 @@
         <!-- Test against Bootable JAR -->
         <profile>
             <id>bootablejar.profile</id>
-            <properties>
-                <!-- TBD - remove once https://issues.redhat.com/browse/WFARQ-74 is done and wildfly-arquillian-3.0.0.Beta2 is out -->
-                <jboss.home>${project.build.directory}</jboss.home>
-                <jboss.modules.path>${basedir}/target/jboss-as-bootable/modules</jboss.modules.path>
-            </properties>
             <activation>
                 <property>
                     <name>ts.bootable</name>
