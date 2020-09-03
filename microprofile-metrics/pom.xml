@@ -143,6 +143,10 @@
                                     <excludes>
                                         <!-- Need MP FaultTolerance -->
                                         <exclude>org/jboss/eap/qe/microprofile/metrics/integration/ft/*Test.java</exclude>
+                                        <!-- The following test cases need for a module.path system property to be set
+                                         which doesn't make sense with Bootable JAR -->
+                                        <exclude>org/jboss/eap/qe/microprofile/metrics/integration/config/CustomMetricCustomConfigSourceProviderTest</exclude>
+                                        <exclude>org/jboss/eap/qe/microprofile/metrics/integration/config/CustomMetricCustomConfigSourceTest</exclude>
                                     </excludes>
                                 </configuration>
                             </execution>
