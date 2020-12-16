@@ -62,9 +62,10 @@
         <galleon.log.time>true</galleon.log.time>
         <testsuite.galleon.pack.groupId>org.wildfly</testsuite.galleon.pack.groupId>
         <testsuite.galleon.pack.artifactId>wildfly-galleon-pack</testsuite.galleon.pack.artifactId>
-        <testsuite.galleon.pack.version>20.0.1.Final</testsuite.galleon.pack.version>
+        <testsuite.galleon.pack.version>21.0.0.Final</testsuite.galleon.pack.version>
         <!-- Bootable JAR -->
-        <version.org.wildfly.jar.plugin>2.0.0.Beta5</version.org.wildfly.jar.plugin>
+        <version.org.wildfly.jar.plugin>2.0.2.Final</version.org.wildfly.jar.plugin>
+        <bootable.jar.legacy.patch.cli.script></bootable.jar.legacy.patch.cli.script>
     </properties>
 
     <dependencyManagement>
@@ -568,6 +569,15 @@
                                 <phase>none</phase>
                             </execution>
                         </executions>
+                    </plugin>
+                    <!-- Bootable JAR Maven plugin -->
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-jar-maven-plugin</artifactId>
+                        <version>${version.org.wildfly.jar.plugin}</version>
+                        <configuration>
+                            <legacy-patch-cli-script>${bootable.jar.legacy.patch.cli.script}</legacy-patch-cli-script>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
