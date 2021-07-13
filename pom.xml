@@ -36,10 +36,10 @@
         <version.javax.servlet.javax.servlet-api>3.0.1</version.javax.servlet.javax.servlet-api>
         <version.junit>4.13.1</version.junit>
         <version.org.apache.maven.plugins.maven-release-plugin>3.0.0-M1</version.org.apache.maven.plugins.maven-release-plugin>
-        <version.org.eclipse.microprofile>3.3</version.org.eclipse.microprofile>
+        <version.org.eclipse.microprofile>4.0.1</version.org.eclipse.microprofile>
         <version.org.jboss.arquillian>1.5.0.Final</version.org.jboss.arquillian>
         <version.org.jboss.wildfly.dist>20.0.0.Final</version.org.jboss.wildfly.dist>
-        <version.org.wildfly.arquillian>3.0.0.Beta3</version.org.wildfly.arquillian>
+        <version.org.wildfly.arquillian>3.0.1.Final</version.org.wildfly.arquillian>
         <version.org.fusesource.jansi>1.18</version.org.fusesource.jansi>
         <!-- wildfly-core update needed to have the launcher version with BootableJarCommandBuilder used to start
         the server up -->
@@ -65,6 +65,7 @@
         <testsuite.galleon.pack.version>20.0.1.Final</testsuite.galleon.pack.version>
         <!-- Bootable JAR -->
         <version.org.wildfly.jar.plugin>2.0.0.Beta5</version.org.wildfly.jar.plugin>
+        <version.org.bitbucket.b_c.jose4j>0.7.4</version.org.bitbucket.b_c.jose4j>
     </properties>
 
     <dependencyManagement>
@@ -235,6 +236,11 @@
                 <groupId>org.wildfly.core</groupId>
                 <artifactId>wildfly-launcher</artifactId>
                 <version>${version.org.wildfly.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bitbucket.b_c</groupId>
+                <artifactId>jose4j</artifactId>
+                <version>${version.org.bitbucket.b_c.jose4j}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
