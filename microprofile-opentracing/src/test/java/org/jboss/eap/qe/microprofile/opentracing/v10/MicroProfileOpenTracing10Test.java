@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.HttpStatus;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -111,6 +112,23 @@ public class MicroProfileOpenTracing10Test {
             assertThat(spanList.stream().anyMatch(element -> serviceTraceIsPresented(element)), is(true));
             assertThat(spanList.stream().anyMatch(element -> resourceTraceIsPresented(element)), is(true));
         });
+    }
+
+    /**
+     * @tpTestDetails This is checking that the server can configure a client request via
+     *                {@code org.eclipse.microprofile.opentracing.ClientTracingRegistrar}
+     * @tpPassCrit The requested URL is successfully called by the server which is returning a HTTP 200 status
+     * @tpSince EAP 7.4.0.GA
+     */
+    //  TODO: This should be moved to a "v20" package, since the existing current package "v10" was used just as a
+    //   working starting point
+    @Test
+    @InSequence(3)
+    @RunAsClient
+    public void testClientTracingRegistrar() {
+        RestAssured.when().get(baseApplicationUrl + "rest/url?url=https://www.google.com")
+                .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 
     /**
