@@ -60,8 +60,8 @@ public class KeycloakIntegrationHighLevelScenarioTest {
                     .withEnvVar("KEYCLOAK_USER", KEYCLOAK_ADMIN_USERNAME)
                     .withEnvVar("KEYCLOAK_PASSWORD", KEYCLOAK_ADMIN_PASSWORD)
                     .withEnvVar("DB_VENDOR", "h2")
-                    .withCmdArg("-b=0.0.0.0")
-                    .withCmdArg("-bmanagement=0.0.0.0")
+                    //.withCmdArg("-b=0.0.0.0")
+                    //.withCmdArg("-bmanagement=0.0.0.0")
                     .build();
 
     public static KeycloakConfigurator keycloakConfigurator = new KeycloakConfigurator.Builder(KEYCLOAK_REALM_NAME)
