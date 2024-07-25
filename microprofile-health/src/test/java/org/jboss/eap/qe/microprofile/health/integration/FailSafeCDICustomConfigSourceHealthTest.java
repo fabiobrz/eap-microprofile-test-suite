@@ -69,7 +69,7 @@ public class FailSafeCDICustomConfigSourceHealthTest extends FailSafeCDIHealthDy
                 client.execute(String.format("/system-property=%s:add(value=%s)", CustomConfigSource.PROPERTIES_FILE_PATH,
                         SetupTask.class.getResource(PROPERTY_FILENAME).getFile())).assertSuccess();
                 ModuleUtil.add(TEST_MODULE_NAME)
-                        .setModuleXMLPath(SetupTask.class.getResource("configSourceModule.xml").getPath())
+                        .setModuleXMLPath(SetupTask.class.getResource("configSourceModule.xml").toURI().getPath())
                         .addResource("config-source", CustomConfigSource.class)
                         .executeOn(client);
                 client.execute(String.format(
