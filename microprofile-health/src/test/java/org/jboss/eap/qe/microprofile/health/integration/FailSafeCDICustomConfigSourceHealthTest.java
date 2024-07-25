@@ -1,6 +1,7 @@
 package org.jboss.eap.qe.microprofile.health.integration;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,8 +29,11 @@ import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 @ServerSetup({ DisableDefaultHealthProceduresSetupTask.class, FailSafeCDICustomConfigSourceHealthTest.SetupTask.class })
 public class FailSafeCDICustomConfigSourceHealthTest extends FailSafeCDIHealthDynamicBaseTest {
     private static final String PROPERTY_FILENAME = "health.properties";
-    Path propertyFile = Paths.get(FailSafeCDICustomConfigSourceHealthTest.class.getResource(PROPERTY_FILENAME).getPath());
+    Path propertyFile = Paths.get(FailSafeCDICustomConfigSourceHealthTest.class.getResource(PROPERTY_FILENAME).toURI());
     private byte[] bytes;
+
+    public FailSafeCDICustomConfigSourceHealthTest() throws URISyntaxException {
+    }
 
     @Before
     public void backup() throws IOException {
