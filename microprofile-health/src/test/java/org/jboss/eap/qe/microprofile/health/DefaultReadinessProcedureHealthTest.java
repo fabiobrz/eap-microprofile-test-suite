@@ -139,22 +139,21 @@ public class DefaultReadinessProcedureHealthTest {
      */
     @Test
     public void testServerStateDown() throws ConfigurationException, IOException, ManagementClientRelatedException {
-        OnlineManagementClient client = ManagementClientProvider.onlineStandalone();
-        try {
+        try (OnlineManagementClient client = ManagementClientProvider.onlineStandalone()) {
             executeCliCommand(client, String.format(CHANGE_H2_DRIVER_NAME_CLI, "wrong_driver_name"));
+            try {
+                RestAssured.get(HealthUrlProvider.readyEndpoint()).then()
+                        .contentType(ContentType.JSON)
+                        .body("status", is("DOWN"),
+                                "checks.find{it.name == 'server-state'}.status", is("DOWN"),
+                                "checks.find{it.name == 'deployments-status'}.status", is("UP"),
+                                "checks.find{it.name == 'boot-errors'}.status", is("UP"),
+                                "checks.find{it.name == 'server-state'}.data.value", is("reload-required"));
 
-            RestAssured.get(HealthUrlProvider.readyEndpoint()).then()
-                    .contentType(ContentType.JSON)
-                    .body("status", is("DOWN"),
-                            "checks.find{it.name == 'server-state'}.status", is("DOWN"),
-                            "checks.find{it.name == 'deployments-status'}.status", is("UP"),
-                            "checks.find{it.name == 'boot-errors'}.status", is("UP"),
-                            "checks.find{it.name == 'server-state'}.data.value", is("reload-required"));
-
-        } finally {
-            // put back configuration to correct form
-            executeCliCommand(client, String.format(CHANGE_H2_DRIVER_NAME_CLI, "h2"));
-            client.close();
+            } finally {
+                // put back configuration to correct form
+                executeCliCommand(client, String.format(CHANGE_H2_DRIVER_NAME_CLI, "h2"));
+            }
         }
     }
 
@@ -167,23 +166,24 @@ public class DefaultReadinessProcedureHealthTest {
     @Test
     public void testBootErrorsDown() throws ConfigurationException, IOException, ManagementClientRelatedException,
             TimeoutException, InterruptedException {
-        OnlineManagementClient client = ManagementClientProvider.onlineStandalone();
-        try {
+        try (OnlineManagementClient client = ManagementClientProvider.onlineStandalone()) {
             executeCliCommand(client, String.format(CHANGE_H2_DRIVER_NAME_CLI, "wrong_driver_name"));
-            new Administration(client).reloadIfRequired();
+            try {
+                new Administration(client).reloadIfRequired();
 
-            RestAssured.get(HealthUrlProvider.readyEndpoint()).then()
-                    .contentType(ContentType.JSON)
-                    .body("status", is("DOWN"),
-                            "checks.find{it.name == 'boot-errors'}.status", is("DOWN"),
-                            "checks.find{it.name == 'server-state'}.status", is("UP"),
-                            "checks.find{it.name == 'deployments-status'}.status", is("DOWN"),
-                            "checks.find{it.name == 'boot-errors'}.data", is(notNullValue()));
-        } finally {
-            // put back configuration to correct form
-            executeCliCommand(client, String.format(CHANGE_H2_DRIVER_NAME_CLI, "h2"));
-            new Administration(client).reloadIfRequired();
-            client.close();
+                RestAssured.get(HealthUrlProvider.readyEndpoint()).then()
+                        .contentType(ContentType.JSON)
+                        .body("status", is("DOWN"),
+                                "checks.find{it.name == 'boot-errors'}.status", is("DOWN"),
+                                "checks.find{it.name == 'server-state'}.status", is("UP"),
+                                "checks.find{it.name == 'deployments-status'}.status", is("DOWN"),
+                                "checks.find{it.name == 'boot-errors'}.data", is(notNullValue()));
+            } finally {
+                // put back configuration to correct form
+                executeCliCommand(client, String.format(CHANGE_H2_DRIVER_NAME_CLI, "h2"));
+                new Administration(client).reloadIfRequired();
+                client.close();
+            }
         }
     }
 
@@ -195,20 +195,20 @@ public class DefaultReadinessProcedureHealthTest {
      */
     @Test
     public void testDeploymentsStatusDown() throws ConfigurationException, IOException, ManagementClientRelatedException {
-        OnlineManagementClient client = ManagementClientProvider.onlineStandalone();
-        try {
+        try (OnlineManagementClient client = ManagementClientProvider.onlineStandalone()) {
             executeCliCommand(client, "deployment disable " + ARCHIVE_NAME);
-
-            RestAssured.get(HealthUrlProvider.readyEndpoint()).then()
-                    .contentType(ContentType.JSON)
-                    .body("status", is("DOWN"),
-                            "checks.find{it.name == 'deployments-status'}.status", is("DOWN"),
-                            "checks.find{it.name == 'server-state'}.status", is("UP"),
-                            "checks.find{it.name == 'boot-errors'}.status", is("UP"),
-                            "checks.find{it.name == 'deployments-status'}.data", is(notNullValue()));
-        } finally {
-            executeCliCommand(client, "deployment enable " + ARCHIVE_NAME);
-            client.close();
+            try {
+                RestAssured.get(HealthUrlProvider.readyEndpoint()).then()
+                        .contentType(ContentType.JSON)
+                        .body("status", is("DOWN"),
+                                "checks.find{it.name == 'deployments-status'}.status", is("DOWN"),
+                                "checks.find{it.name == 'server-state'}.status", is("UP"),
+                                "checks.find{it.name == 'boot-errors'}.status", is("UP"),
+                                "checks.find{it.name == 'deployments-status'}.data", is(notNullValue()));
+            } finally {
+                executeCliCommand(client, "deployment enable " + ARCHIVE_NAME);
+                client.close();
+            }
         }
     }
 }
